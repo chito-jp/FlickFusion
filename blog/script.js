@@ -1,8 +1,15 @@
 document.getElementById('accept-btn').addEventListener('click', function() {
     document.cookie = "yuki=True; max-age=31536000; path=/";
     location.href = "/";
-    return;
 });
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        document.cookie = "yuki=True; max-age=31536000; path=/";
+        location.href = "/";
+    }
+});
+
 
 document.getElementById('reject-btn').addEventListener('click', function() {
     hideCookieNotice();
