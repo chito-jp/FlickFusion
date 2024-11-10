@@ -1,281 +1,123 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <link rel="icon" href="https://m.youtube.com/static/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="https://m.youtube.com/static/apple-touch-icon-180x180-precomposed.png" sizes="180x180">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="apple-touch-icon" href="https://m.youtube.com/static/apple-touch-icon-167x167-precomposed.png" sizes="167x167">
+    <link rel="apple-touch-icon" href="https://m.youtube.com/static/apple-touch-icon-152x152-precomposed.png" sizes="152x152">
+    <link rel="apple-touch-icon" href="https://m.youtube.com/static/apple-touch-icon-144x144-precomposed.png" sizes="144x144">
+    <link rel="apple-touch-icon" href="https://m.youtube.com/static/apple-touch-icon-120x120-precomposed.png" sizes="120x120">
+    <link rel="apple-touch-icon" href="https://m.youtube.com/static/apple-touch-icon-114x114-precomposed.png" sizes="114x114">
+    <link rel="apple-touch-icon" href="https://m.youtube.com/static/apple-touch-icon-72x72-precomposed.png" sizes="72x72">
+    <link rel="apple-touch-icon" href="https://m.youtube.com/static/apple-touch-icon-57x57-precomposed.png" sizes="57x57">
+    <link rel="shortcut icon" href="https://www.youtube.com/s/desktop/daa4e47c/img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://www.youtube.com/s/desktop/daa4e47c/img/favicon_32x32.png" sizes="32x32">
+    <link rel="icon" href="https://www.youtube.com/s/desktop/daa4e47c/img/favicon_48x48.png" sizes="48x48">
+    <link rel="icon" href="https://www.youtube.com/s/desktop/daa4e47c/img/favicon_96x96.png" sizes="96x96">
+    <link rel="icon" href="https://www.youtube.com/s/desktop/daa4e47c/img/favicon_144x144.png" sizes="144x144">
+        <title>FlickFusion</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="/css/pure-min.css">
     <link rel="stylesheet" href="/css/grids-responsive-min.css">
     <link rel="stylesheet" href="/css/ionicons.min.css">
     <link rel="stylesheet" href="/css/default.css">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <title>FlickFusion</title>
-    <meta charset="UTF-8">
     <style>
-        /* CSS styles as previously defined */
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            display: flex;
-            flex-direction: row;
-        }
-
-        #sidebar {
-            width: 200px;
-            background-color: #fff;
-            padding: 15px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-right: 1px solid #ddd;
-        }
-
-        .searchbar {
-            display: flex;
-            justify-content: center;
-            padding: 10px;
-            background-color: #333;
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            position: absolute;
-            top: 0;
-        }
-
-        .searchbar input[type="search"] {
-            width: 80%;
-            padding: 15px;
-            border-radius: 2px;
-            border: none;
-            font-size: 18px;
-            background-color: #555;
-            color: white;
-            margin: 10px 0;
-        }
-
-        .searchbar input[type="search"]::placeholder {
-            color: #aaa;
-        }
-
-        .pure-g {
-            max-width: 1200px;
-            margin: 60px auto;
-            flex-grow: 1;
-            display: flex;
-            flex-wrap: wrap;
-        }
-
         .video-card {
-            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
             margin: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
             overflow: hidden;
+            transition: transform 0.2s;
         }
-
+        
         .video-card:hover {
             transform: scale(1.05);
         }
 
-        .thumbnail img {
+        .video-card img {
             width: 100%;
             height: auto;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
         }
 
         .video-data {
-            font-size: 12px;
-            color: #666;
+            font-size: 0.9em;
+            color: #888;
         }
 
-        .flexible {
+        .video-container {
             display: flex;
-            justify-content: space-between;
-            padding: 10px;
+            flex-wrap: wrap;
+            justify-content: space-around;
         }
 
-        .pagination {
-            text-align: right;
-            padding: 10px;
-        }
-
-        a {
-            text-decoration: none;
-            color: #000;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .video-card {
-            width: calc(30% - 20px);
-            height: calc(30%);
-            aspect-ratio: 1.618 / 1;
-        }
-
-        @media (max-width: 768px) {
-            .video-card {
-                width: calc(45% - 20px);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .video-card {
-                width: 100%;
-            }
-        }
-
-        /* Overlay Styles */
-        #overlay {
-            display: none; /* Initially hidden */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .overlay-content {
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-        }
-
-        /* Styling for pagination link in menu */
-        .pagination-link {
-            margin-top: 20px;
-            display: block;
-            text-align: center;
+        .searchbar {
+            margin-bottom: 20px;
         }
     </style>
 </head>
-
-<body>
-    <div id="sidebar">
-        <h2>メニュー</h2>
-        <ul>
-            <li><a href="#" onclick="redirectHome()">ホーム</a></li>
-            <li><a href="#" onclick="showErrorOverlay()">ショート</a></li>
-            <li><a href="#" onclick="showErrorOverlay()">登録チャンネル</a></li>
-            <li><a href="#" onclick="showErrorOverlay()">履歴</a></li>
-            <li><a href="#" onclick="showErrorOverlay()">プレイリスト</a></li>
-            <li><a href="#" onclick="showErrorOverlay()">後で見る</a></li>
-            <li><a href="#" onclick="showErrorOverlay()">お気に入り動画</a></li>
-            <li><a href="#" onclick="showErrorOverlay()">トレンド</a></li>
-            <li><a href="#" onclick="showErrorOverlay()">音楽</a></li>
-            <li><a href="#" onclick="showErrorOverlay()">映画 & TV</a></li>
-            <li><a href="#" onclick="showErrorOverlay()">ライブ</a></li>
-            <li><a href="#" onclick="showErrorOverlay()">設定</a></li>
-            <li><a href="#" onclick="showHelpOverlay()">ヘルプ</a></li>
-            <li class="pagination-link"><a href="{{next}}">次のページ</a></li>
-        </ul>
-    </div>
-
-    <div class="searchbar">
-        <form class="pure-form" action="/search" method="get">
-            <fieldset>
-                <input type="search" id="searchbox" autocomplete="on" autocorrect="on" autocapitalize="none" spellcheck="false" name="q" placeholder="検索" title="検索" value="{{ word }}">
-            </fieldset>
-        </form>
-    </div>
-
+<body class="no-theme">
     <div class="pure-g">
-        <div class="pure-u-1" id="contents">
-            <div class="pure-g">
-                {% for result in results %}
-                <div class="pure-u-1 pure-u-md-1-3 video-card">
-                    <div class="thumbnail">
-                        {% if result["type"] == "video" %}
-                        <a href="/watch?v={{ result['id'] }}">
-                            <img loading="lazy" src="{% if proxy == "True" %}/thumbnail?v={{ result['id'] }}{% else %}https://img.youtube.com/vi/{{ result['id'] }}/0.jpg{% endif %}" onerror="document.cookie = 'proxy=True;max-age=2592000;';">
-                            <p class="length">{{result["length"]}}</p>
-                            <p dir="auto">{{ result['title'] }}</p>
-                        </a>
-                        <div class="flexible">
-                            <a class="video-data" href="/channel/{{result['authorId']}}">{{result["author"]}}</a>
-                            <p class="video-data">{{result["published"]}}</p>
-                        </div>
-                        {% elif result["type"] == "channel" %}
-                        <a href="/channel/{{result["id"]}}">
-                            <img loading="lazy" class="channel-thumbnail" src="{{result["thumbnail"]}}" style="width:100%; border-radius: 5px;">
-                            <p dir="auto">{{result["author"]}}</p>
-                        </a>
-                        {% elif result["type"] == "playlist" %}
-                        <a href="/playlist?list={{result["id"]}}">
-                            <div class="thumbnail">
-                                <img loading="lazy" src="{% if proxy == "True" %}/thumbnail?v={{ result['thumbnail'] }}{% else %}https://img.youtube.com/vi/{{ result['thumbnail'] }}/0.jpg{% endif %}">
-                                <p class="length">{{result["count"]}}個の動画</p>
-                            </div>
-                            <p dir="auto">{{result["title"]}}</p>
-                        </a>
-                        {% endif %}
-                    </div>
+        <div class="pure-u-1 pure-u-md-12-24 searchbar">
+            <form class="pure-form" action="/search" method="get">
+                <fieldset>
+                    <input type="search" id="searchbox" autocomplete="on" autocorrect="on" autocapitalize="none" spellcheck="false" name="q" placeholder="検索" title="検索" value="{{ word }}">
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <div class="pure-g">
+        <div class="video-container">
+            {% for result in results %}
+            <div class="video-card pure-u-1 pure-u-md-1-4">
+                {% if result["type"] == "video" %}
+                <a href="/watch?v={{ result['id'] }}">
+                    <img loading="lazy" src="{% if proxy == "True" %}/thumbnail?v={{ result['id'] }}{% else %}https://img.youtube.com/vi/{{ result['id'] }}/0.jpg{% endif %}" onerror="document.cookie = 'proxy=True;max-age=2592000;';">
+                    <p class="length">{{result["length"]}}</p>
+                    <p dir="auto">{{ result['title'] }}</p>
+                </a>
+                <div class="video-card-row flexible">
+                    <a href="/channel/{{result['authorId']}}">{{result["author"]}}</a>
                 </div>
-                {% endfor %}
+                <div class="video-card-row flexible">
+                    <p class="video-data" dir="auto">{{result["published"]}}</p>
+                </div>
+                {% elif result["type"] == "channel" %}
+                <a href="/channel/{{result["id"]}}">
+                    <center>
+                        <img loading="lazy" tabindex="-1" style="width:56.25%" src="{{result["thumbnail"]}}">
+                    </center>
+                    <p dir="auto">{{result["author"]}}</p>
+                </a>
+                {% elif result["type"] == "playlist" %}
+                <a href="/playlist?list={{result["id"]}}">
+                    <img loading="lazy" class="thumbnail" src="{% if proxy == "True" %}/thumbnail?v={{ result['thumbnail'] }}{% else %}https://img.youtube.com/vi/{{ result['thumbnail'] }}/0.jpg{% endif %}">
+                    <p class="length">{{result["count"]}}個の動画</p>
+                    <p dir="auto">{{result["title"]}}</p>
+                </a>
+                {% endif %}
             </div>
+            {% endfor %}
         </div>
     </div>
-
-    <div id="overlay">
-        <div class="overlay-content">
-            <p id="overlay-message"></p>
-            <button onclick="closeOverlay()">閉じる</button>
-        </div>
+    <div class="pure-u-1" style="text-align:right">
+        <a href="{{next}}">次のページ</a>
     </div>
-
     <script>
-        // JavaScript functions
-        document.addEventListener("DOMContentLoaded", function () {
-            function redirectHome() {
-                const word = "word"; // "word"の部分は必要に応じて変更
-                const host = window.location.origin;
-                window.location.href = host + '/' + word;
-            }
-
-            function showErrorOverlay() {
-                document.getElementById("overlay-message").innerText = "読み込みの途中でエラーが発生しました";
-                document.getElementById("overlay").style.display = "flex"; // オーバーレイを表示
-            }
-
-            function showHelpOverlay() {
-                document.getElementById("overlay-message").innerText = "ヘルプ　https://raw.githubusercontent.com/mino-hobby-pro/youtube-mod-menu/refs/heads/main/%E3%83%98%E3%83%AB%E3%83%97";
-                document.getElementById("overlay").style.display = "flex"; // オーバーレイを表示
-            }
-
-            function closeOverlay() {
-                document.getElementById("overlay").style.display = "none"; // オーバーレイを非表示
-            }
-
-            // Autocomplete setup
-            $('#searchbox').autocomplete({
-                source: function (request, response) {
-                    var url = "/suggest?keyword=" + request.term;
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("GET", url);
-                    xhr.onload = function () {
-                        response(JSON.parse(xhr.responseText));
-                    };
-                    xhr.send();
-                },
-                delay: 300
-            });
-
-            // Exposing functions to window for onclick events in HTML
-            window.redirectHome = redirectHome;
-            window.showErrorOverlay = showErrorOverlay;
-            window.showHelpOverlay = showHelpOverlay;
-            window.closeOverlay = closeOverlay;
+        $('#searchbox').autocomplete({
+            source: function (request, response) {
+                var url = "/suggest?keyword=" + request.term;
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", url);
+                xhr.onload = function() {
+                    response(JSON.parse(xhr.responseText));
+                };
+                xhr.send();
+            },
+            delay: 300
         });
     </script>
 </body>
-
 </html>
