@@ -364,9 +364,9 @@ template = Jinja2Templates(directory='templates').TemplateResponse
 def home(response: Response,request: Request,yuki: Union[str] = Cookie(None)):
     if check_cokie(yuki):
         response.set_cookie("yuki","True",max_age=60 * 60 * 24 * 7)
-        return template("site.html",{"request": request})
+        return template("site.html")
     print(check_cokie(yuki))
-    return redirect("/")
+    return template("site.html")
 
 @app.get("/flick", response_class=HTMLResponse)
 def home(response: Response,request: Request,yuki: Union[str] = Cookie(None)):
