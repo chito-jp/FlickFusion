@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英単語クイズ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            width: 80%;
+            max-width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>英単語クイズ</h1>
+        <div id="quiz">
+            <p id="question">ここに日本語が表示されます</p>
+            <input type="text" id="answer" placeholder="英語で答えてください">
+            <button onclick="checkAnswer()">答え合わせ</button>
+            <p id="feedback"></p>
+        </div>
+        <button onclick="nextQuestion()">次の問題</button>
+    </div>
+
+    <script>
+        const questions = [
+            { japanese: "りんご", english: "apple" },
+            { japanese: "ねこ", english: "cat" },
+            { japanese: "いぬ", english: "dog" },
+            { japanese: "さくらんぼ", english: "cherry" },
+            { japanese: "みかん", english: "orange" }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        // 最初の問題をロード
+        loadQuestion();
+
+        function loadQuestion() {
+            const question = questions[currentQuestionIndex];
+            document.getElementById("question").textContent = question.japanese;
+            document.getElementById("answer").value = "";
+            document.getElementById("feedback").textContent = "";
+        }
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+            const correctAnswer = questions[currentQuestionIndex].english.toLowerCase();
+            const feedback = document.getElementById("feedback");
+
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = "正解！";
+                feedback.style.color = "green";
+            } else {
+                feedback.textContent = "不正解！ 正しい答え: " + correctAnswer;
+                feedback.style.color = "red";
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+            loadQuestion();
+        }
+    </script>
+</body>
+</html>
