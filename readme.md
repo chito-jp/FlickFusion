@@ -2,9 +2,9 @@
 
 ## Deploy FlickFusion
 
-[![Deploy on Koyeb](https://www.koyeb.com/deploy/button.svg)](https://app.koyeb.com/deploy?repository=https://github.com/yourusername/FlickFusion)  
-[![Deploy on Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/yourusername/FlickFusion)  
-[![Deploy on Render](https://render.com/buttons/deploy-to-render.svg)](https://render.com/deploy?repo=https://github.com/yourusername/FlickFusion)
+[![Deploy on Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?repository=https://github.com/chito-jp/FlickFusion)  
+[![Deploy on Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/chito-jp/FlickFusion)  
+[![Deploy on Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/chito-jp/FlickFusion)
 
 ## 概要
 
