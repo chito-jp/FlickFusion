@@ -134,6 +134,7 @@ os.system("chmod 777 ./yukiverify")
 # APIリストのコピーを生成
 apichannels = apis.copy()
 apicomments = apis.copy()
+apivideos = apis.copy()
 
 # 例外クラスの定義
 class APItimeoutError(Exception):
@@ -276,6 +277,28 @@ def apirequest_video(url):
             video_apis.remove(api)
     raise APItimeoutError("動画APIがタイムアウトしました")
 
+#生のビデオデータを返すAPI用
+def api_raw_video(id):
+    global apivideos
+    starttime = time.time()
+    for api in apivideos:
+        if time.time() - starttime >= max_time - 1:
+            break
+        try:
+            res = requests.get(api + r"api/v1/videos/" + id, timeout=max_api_wait_time)
+            if res.status_code == 200 and is_json(res.text):
+                print(f"動画API成功: {api}")  # 成功したAPIをログに出力
+                return res.text
+            else:
+                print(f"エラー: {api}")
+                video_apis.append(api)
+                video_apis.remove(api)
+        except:
+            print(f"タイムアウト: {api}")
+            video_apis.append(api)
+            video_apis.remove(api)
+    raise APItimeoutError("動画APIがタイムアウトしました")
+
 
 def get_search(q,page):
     global logs
@@ -342,7 +365,7 @@ def get_verifycode():
 
 from fastapi import FastAPI, Depends
 from fastapi import Response,Cookie,Request
-from fastapi.responses import HTMLResponse,PlainTextResponse
+from fastapi.responses import HTMLResponse,JSONResponse,PlainTextResponse
 from fastapi.responses import RedirectResponse as redirect
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -517,4 +540,36 @@ def video(
         "authoricon": t[6],
         "author": t[5],
         "proxy": proxy
+    })
+
+@app.get("/api/raw/video/{videoid}", response_class=JSONResponse)
+def video(
+    videoid: str, 
+    response: Response, 
+    request: Request, 
+    yuki: Union[str] = Cookie(None), 
+    proxy: Union[str] = Cookie(None)
+):
+    global g_videoid  # グローバル変数を使用するために宣言
+
+    # クッキーの確認
+    if not check_cokie(yuki):
+        return redirect("/")
+    
+    # クッキーをセット
+    response.set_cookie(key="yuki", value="True", max_age=7*24*60*60)
+
+    # 動画IDを取得し、videoidとg_videoidに代入
+    videoid = v
+    g_videoid = videoid  # グローバル変数に代入
+
+    # データを取得
+    t = api_raw_video(videoid)
+
+    # 再度クッキーをセット
+    response.set_cookie(key="yuki", value="True", max_age=60 * 60 * 24 * 7)
+
+    # テンプレートに g_videoid を渡す
+    return JSONResponse({
+        "data": t
     })
