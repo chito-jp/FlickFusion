@@ -141,6 +141,11 @@ def read_json(file_path: str) -> Any:
     except json.JSONDecodeError:
         return {}  # JSON形式が不正な場合も空の辞書を返す
 
+# JSONファイルに書き込む関数
+def write_json(file_path: str, data: Any) -> None:
+    with open(file_path, "w", encoding="utf-8") as file:
+        json.dump(data, file, indent=4, ensure_ascii=False)  # JSONデータを整形して書き込む
+
 # APIリストのコピーを生成
 apichannels = apis.copy()
 apicomments = apis.copy()
