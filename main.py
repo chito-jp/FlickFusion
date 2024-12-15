@@ -499,15 +499,6 @@ def home():
     global url
     url = requests.get(r'https://raw.githubusercontent.com/mochidukiyukimi/yuki-youtube-instance/main/instance.txt').text.rstrip()
 
-
-@app.exception_handler(500)
-def page(request: Request,__):
-    return template("APIwait.html",{"request": request},status_code=500)
-
-@app.exception_handler(APItimeoutError)
-def APIwait(request: Request,exception: APItimeoutError):
-    return template("APIwait.html",{"request": request},status_code=500)
-
 g_videoid = None
 
 @app.get('/watch', response_class=HTMLResponse)
