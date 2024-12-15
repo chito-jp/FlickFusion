@@ -565,5 +565,5 @@ def video(
 
     # テンプレートに g_videoid を渡す
     return JSONResponse({
-        "data": t
+        "data": json.loads(t)
     })
