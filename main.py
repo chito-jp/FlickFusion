@@ -550,18 +550,12 @@ def video(
     yuki: Union[str] = Cookie(None), 
     proxy: Union[str] = Cookie(None)
 ):
-    global g_videoid  # グローバル変数を使用するために宣言
-
     # クッキーの確認
     if not check_cokie(yuki):
         return redirect("/")
     
     # クッキーをセット
     response.set_cookie(key="yuki", value="True", max_age=7*24*60*60)
-
-    # 動画IDを取得し、videoidとg_videoidに代入
-    videoid = v
-    g_videoid = videoid  # グローバル変数に代入
 
     # データを取得
     t = api_raw_video(videoid)
