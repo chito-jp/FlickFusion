@@ -575,8 +575,8 @@ def get_video(
     # データを整形し返す
     return JSONResponse({
         "title": t["title"],
-        "streamUrl": t["formatStreams"],
-        "description": t["description"][-1]["url"],
+        "streamUrl": t["formatStreams"][-1]["url"],
+        "description": t["description"],
         "viewCount": t["viewCount"],
         "likeCount": t["likeCount"]
     })
