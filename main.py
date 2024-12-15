@@ -542,28 +542,14 @@ def video(
         "proxy": proxy
     })
 
-@app.get("/api/raw/video/{videoid}", response_class=JSONResponse)
+@app.get("/api/raw/video/{videoid}")
 def video(
     videoid: str, 
     response: Response, 
     request: Request, 
-    yuki: Union[str] = Cookie(None), 
-    proxy: Union[str] = Cookie(None)
 ):
-    # クッキーの確認
-    if not check_cokie(yuki):
-        return redirect("/")
-    
-    # クッキーをセット
-    response.set_cookie(key="yuki", value="True", max_age=7*24*60*60)
-
     # データを取得
     t = api_raw_video(videoid)
 
-    # 再度クッキーをセット
-    response.set_cookie(key="yuki", value="True", max_age=60 * 60 * 24 * 7)
-
-    # テンプレートに g_videoid を渡す
-    return JSONResponse({
-        "data": json.loads(t)
-    })
+    #データを返す
+    return t
