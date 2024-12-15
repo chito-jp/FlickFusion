@@ -571,14 +571,30 @@ def get_video(
 ):
     # データを取得
     t = api_raw_video(videoid)
+    
+    # 関連動画を解析してリストにする
+    related_videos = [
+        {
+            "id": i["videoId"],
+            "title": i["title"],
+            "authorId": i["authorId"],
+            "author": i["author"],
+            "viewCount": i["viewCount"]  # 再生回数を追加（デフォルトは0）
+        }
+        for i in t["recommendedVideos"]
+    ]
+    
     # データを整形し返す
-    return JSONResponse({
-        "title": t["title"],
-        "streamUrl": t["formatStreams"][-1]["url"],
-        "description": t["description"],
-        "viewCount": t["viewCount"],
-        "likeCount": t["likeCount"]
-    })
+    return JSONResponse([
+        {
+            "title": t["title"],
+            "streamUrl": t["formatStreams"][-1]["url"],
+            "description": t["description"],
+            "viewCount": t["viewCount"],
+            "likeCount": t["likeCount"]
+        },
+        related_videos
+    ])
 
 
 @app.get("/file/apis")
