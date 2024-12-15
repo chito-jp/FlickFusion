@@ -9,8 +9,8 @@ import subprocess
 from cache import cache
 from typing import Any
 
-max_api_wait_time = 8
-max_time = 20
+max_api_wait_time = 10
+max_time = 30
 apis = [
     r"https://invidious.jing.rocks/",
     r"https://invidious.nerdvpn.de/",
@@ -276,7 +276,7 @@ def apirequest_video(url):
             res = requests.get(api + url, timeout=max_api_wait_time)
             if res.status_code == 200 and is_json(res.text):
                 print(f"動画API成功: {api}")  # 成功したAPIをログに出力
-                return res.text
+                return json.loads(res.text)
             else:
                 print(f"エラー: {api}")
                 video_apis.append(api)
