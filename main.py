@@ -217,12 +217,6 @@ def apicommentsrequest(url):
 
 # 動画取得用APIリストの作成
 video_apis = [
-    r"https://inv.nadeko.net",
-    r"https://invidious.nietzospannend.nl",
-    r"https://youtube.privacyplz.org",
-    r"https://invidious.0011.lt",
-    r"https://yt.yoc.ovh",
-    r"https://rust.oskamp.nl",
     r"https://invidious.jing.rocks/",
     r"https://invidious.nerdvpn.de/",
     r"https://script.google.com/macros/s/AKfycbxic9NV_JbKs1Ia4m5yw6z7nAZjkQ0mjZ2FGi29ZtLMhX9R6JSEO6jZBuXpNyWHCuRy/exec?videoId=",
