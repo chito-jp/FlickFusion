@@ -131,10 +131,20 @@ version = "1.0"
 
 os.system("chmod 777 ./yukiverify")
 
+# JSONファイルを読み込む関数
+def read_json(file_path: str) -> Any:
+    try:
+        with open(file_path, "r", encoding="utf-8") as file:
+            return json.load(file)  # JSONデータを辞書形式で返す
+    except FileNotFoundError:
+        return {}  # ファイルが存在しない場合は空の辞書を返す
+    except json.JSONDecodeError:
+        return {}  # JSON形式が不正な場合も空の辞書を返す
+
 # APIリストのコピーを生成
 apichannels = apis.copy()
 apicomments = apis.copy()
-apivideos = apis.copy()
+apivideos = read_json(r"apis.json")
 
 # 例外クラスの定義
 class APItimeoutError(Exception):
@@ -147,16 +157,6 @@ def is_json(json_str):
         return True
     except json.JSONDecodeError:
         return False
-
-# JSONファイルを読み込む関数
-def read_json(file_path: str) -> Any:
-    try:
-        with open(file_path, "r", encoding="utf-8") as file:
-            return json.load(file)  # JSONデータを辞書形式で返す
-    except FileNotFoundError:
-        return {}  # ファイルが存在しない場合は空の辞書を返す
-    except json.JSONDecodeError:
-        return {}  # JSON形式が不正な場合も空の辞書を返す
 
 # 汎用リクエスト
 def apirequest(url):
