@@ -10,7 +10,7 @@ from cache import cache
 
 
 max_api_wait_time = 8
-max_time = 12
+max_time = 20
 apis = [
     r"https://invidious.jing.rocks/",
     r"https://invidious.nerdvpn.de/",
@@ -147,6 +147,16 @@ def is_json(json_str):
         return True
     except json.JSONDecodeError:
         return False
+
+# JSONファイルを読み込む関数
+def read_json(file_path: str) -> Any:
+    try:
+        with open(file_path, "r", encoding="utf-8") as file:
+            return json.load(file)  # JSONデータを辞書形式で返す
+    except FileNotFoundError:
+        return {}  # ファイルが存在しない場合は空の辞書を返す
+    except json.JSONDecodeError:
+        return {}  # JSON形式が不正な場合も空の辞書を返す
 
 # 汎用リクエスト
 def apirequest(url):
@@ -543,7 +553,7 @@ def video(
     })
 
 @app.get("/api/raw/video/{videoid}")
-def video(
+def get_raw_video(
     videoid: str, 
     response: Response, 
     request: Request, 
@@ -552,4 +562,9 @@ def video(
     t = api_raw_video(videoid)
 
     #データを返す
+    return t
+
+@app.get("/file/apis")
+def get_apis():
+    t = read_json(r"apis.json")
     return t
