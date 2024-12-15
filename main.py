@@ -564,6 +564,24 @@ def get_raw_video(
     #データを返す
     return t
 
+@app.get("/api/video/{videoid}")
+def get_video(
+    videoid: str, 
+    response: Response, 
+    request: Request,     
+):
+    # データを取得
+    t = api_raw_video(videoid)
+    # データを整形し返す
+    return JSONResponse({
+        "title": t["title"],
+        "streamUrl": t["formatStreams"],
+        "description": t["description"][-1]["url"],
+        "viewCount": t["viewCount"],
+        "likeCount": t["likeCount"]
+    })
+
+
 @app.get("/file/apis")
 def get_apis():
     t = read_json(r"apis.json")
