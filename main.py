@@ -276,7 +276,7 @@ def apirequest_video(url):
             res = requests.get(api + url, timeout=max_api_wait_time)
             if res.status_code == 200 and is_json(res.text):
                 print(f"動画API成功: {api}")  # 成功したAPIをログに出力
-                return json.loads(res.text)
+                return res.text
             else:
                 print(f"エラー: {api}")
                 video_apis.append(api)
@@ -298,7 +298,7 @@ def api_raw_video(id):
             res = requests.get(api + r"api/v1/videos/" + id, timeout=max_api_wait_time)
             if res.status_code == 200 and is_json(res.text):
                 print(f"動画API成功: {api}")  # 成功したAPIをログに出力
-                return res.text
+                return json.loads(res.text)
             else:
                 print(f"エラー: {api}")
                 video_apis.append(api)
